@@ -1,6 +1,6 @@
 import { DataSource, EntityRepository, Repository } from "typeorm";
+import {Injectable} from "@nestjs/common"
 
-import { Injectable } from "@nestjs/common";
 import { TaskEntity } from "./task.entity";
 
 @Injectable()
