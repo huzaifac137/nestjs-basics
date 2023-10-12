@@ -10,14 +10,14 @@ export class AuthController {
     @Post("login")
     @UsePipes(ValidationPipe)
     async LoginUser(@Body() creds:LoginDTO , @Req() req:Request , @Res() res:Response ) : Promise<void>{
-           const response = await this.authService.Login(creds);
-           res.status(201).json({response});
+           const data = await this.authService.Login(creds);
+           res.status(201).json({data});
     }
 
     @Post("signup")
     @UsePipes(ValidationPipe)
     async SignupUser(@Body() creds:SignupDTO , @Req() req:Request , @Res() res:Response ) : Promise<void>{
          const response = await this.authService.Signup(creds);
-         res.status(201).json({response});
+         res.status(201).json({message : response});
     }
 }
