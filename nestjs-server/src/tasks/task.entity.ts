@@ -14,5 +14,8 @@ export class TaskEntity extends BaseEntity{
     description : string ;
     @Column()
     status : TaskStatus;
+
+    @Column()
+    creator : string
     
 };

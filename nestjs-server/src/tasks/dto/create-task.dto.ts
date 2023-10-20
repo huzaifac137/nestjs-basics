@@ -6,4 +6,7 @@ export class createTaskDTO {
     title : string;
     @IsNotEmpty()
     description : string ;
+
+    @IsNotEmpty()
+    creator: string
 }

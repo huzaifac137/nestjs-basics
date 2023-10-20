@@ -25,11 +25,12 @@ export class TasksService {
   }
 
   async createTask(createTaskDto: createTaskDTO): Promise<TaskEntity> {
-    const { title, description } = createTaskDto;
+    const { title, description , creator } = createTaskDto;
     const task: TaskModel = {
       title: title,
       description: description,
       status: TaskStatus.OPEN,
+      creator : creator
     };
 
     const newTask = this.taskRepository.create(task);
