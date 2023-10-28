@@ -1,9 +1,11 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, DeepPartial, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { TaskStatus } from "./taskStatus.enum";
+import { AuthEntity } from "src/auth/auth.entity";
 
 
 @Entity()
 export class TaskEntity extends BaseEntity{
+
     
     @PrimaryGeneratedColumn("uuid")
     id: string ;
@@ -15,7 +17,8 @@ export class TaskEntity extends BaseEntity{
     @Column()
     status : TaskStatus;
 
-    @Column()
-    creator : string
+    @ManyToOne(()=> AuthEntity , (user)=> user.tasks)
+    @JoinColumn({name :"creator"})
+    creator : AuthEntity
     
 };

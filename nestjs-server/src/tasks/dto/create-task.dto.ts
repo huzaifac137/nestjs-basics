@@ -1,4 +1,7 @@
 import {IsNotEmpty} from "class-validator";
+import { UUID } from "crypto";
+import { AuthEntity } from "src/auth/auth.entity";
+import { DeepPartial } from "typeorm";
 
 export class createTaskDTO {
 
@@ -8,5 +11,5 @@ export class createTaskDTO {
     description : string ;
 
     @IsNotEmpty()
-    creator: string
+    creator: DeepPartial<AuthEntity>
 }

@@ -6,6 +6,8 @@ import { createTaskDTO } from './dto/create-task.dto';
 import { TaskStatusValidation } from './pipes/task-status-validator.pipe';
 import { TaskStatus } from './taskStatus.enum';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { DeepPartial } from 'typeorm';
+import { AuthEntity } from 'src/auth/auth.entity';
 
 @Controller('tasks')
 
@@ -32,7 +34,7 @@ export class TasksController {
        {
          throw new UnauthorizedException("Not authorized");
        }   
-    const newTask = await this.tasksService.createTask({creator , ...createTasksDto});
+    const newTask = await this.tasksService.createTask({ creator ,...createTasksDto});
      res.status(201).json({newTask});
    }
    
@@ -50,11 +52,11 @@ export class TasksController {
    @Delete(":id")
    @UseGuards(AuthGuard)
    async deleteTask(@Param("id" ) id:string , @Res() res:Response ,  @Req() req:Request) :Promise<void> {
-    if(!req?.user?.userId)
+    if(!req?.user?.userId )
     {
       throw new UnauthorizedException("Not authorized");
     }   
-    const task = await this.tasksService.deleteTask(id);
+    const task = await this.tasksService.deleteTask(id , req.user.userId as DeepPartial<AuthEntity>);
      res.status(201).json({message : task});
    }
 
@@ -66,7 +68,7 @@ export class TasksController {
     {
       throw new UnauthorizedException("Not authorized");
     }   
-    const updatedTask = await this.tasksService.updateTaskStatus(id ,  status);
+    const updatedTask = await this.tasksService.updateTaskStatus(id ,  status , req?.user?.userId as DeepPartial<AuthEntity>);
         res.status(201).json({updatedTask});
    }
 }
